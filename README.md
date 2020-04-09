@@ -32,4 +32,4 @@ The _Segment number_ is mapped to the segment table. The limit of the respective
 
 In the case of valid address, the base address of the segment is added to the offset to get the physical address of actual word in the main memory.
 
-![](images/os-segmentation.png)
+![](src/assets/images/os-segmentation.png)
