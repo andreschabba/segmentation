@@ -5,6 +5,7 @@ import {
     routes
 } from './routes';
 import "normalize.css";
+import vuetify from './plugins/vuetify';
 
 Vue.use(VueRouter);
 Vue.config.productionTip = false;
@@ -16,5 +17,6 @@ const router = new VueRouter({
 
 new Vue({
     router,
+    vuetify,
     render: h => h(App)
 }).$mount("#app");
