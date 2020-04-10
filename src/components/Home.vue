@@ -13,6 +13,7 @@
     <p>The Segment number is mapped to the segment table. The limit of the respective segment is compared with the offset. If the offset is less than the limit then the address is valid otherwise it throws an error as the address is invalid.</p>
     <p>In the case of valid address, the base address of the segment is added to the offset to get the physical address of actual word in the main memory.</p>
     <br />
+    <br />
     <img id="image" src="../assets/images/os-segmentation.png" />
   </div>
 </template>
