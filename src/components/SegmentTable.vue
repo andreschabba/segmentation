@@ -1,9 +1,9 @@
 <template>
   <div class="container">
-    <NewProcess @processAdded="newProcess" />
+    <NewProcess :size="size" @processAdded="newProcess" />
     <v-row v-if="processes.length != 0">
       <v-col cols="12">
-        <Table :processes="processes" />
+        <Table :processes="processes" @processDeleted="deleteProcess" />
       </v-col>
     </v-row>
   </div>
@@ -15,15 +15,11 @@ import Table from "./Table.vue";
 
 export default {
   name: "SegmentTable",
+  props: ["size"],
   data: () => ({
     dialog: false,
     isWrong1: false,
     isWrong2: false,
-    processData: {
-      name: "",
-      limit: null,
-      base: null
-    },
     processes: []
   }),
   components: {
@@ -33,6 +29,10 @@ export default {
   methods: {
     newProcess(process) {
       this.processes.push(process);
+      this.$emit("sendProcesses", this.processes);
+    },
+    deleteProcess(index) {
+      this.processes.splice(index, 1);
     }
   }
 };

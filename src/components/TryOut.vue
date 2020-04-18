@@ -26,16 +26,13 @@
           </v-card-text>
           <v-card-actions>
             <v-spacer></v-spacer>
-            <v-btn color="blue darken-1" text @click="dialog = false"
-              >Close</v-btn
-            >
+            <v-btn color="blue darken-1" text @click="dialog = false">Close</v-btn>
             <v-btn
               :disabled="!size || isWrong"
               color="blue darken-1"
               text
               @click.prevent="submitted"
-              >Save</v-btn
-            >
+            >Save</v-btn>
           </v-card-actions>
         </v-card>
       </v-dialog>
@@ -44,11 +41,12 @@
       <v-col cols="12" md="6" sm="12">
         <h2>Segment Table</h2>
         <hr />
-        <SegmentTable />
+        <SegmentTable :size="size" @sendProcesses="getProcesses" />
       </v-col>
       <v-col cols="12" md="6" sm="12">
         <h2>Physical Address Space</h2>
         <hr />
+        <PhysicalAddress :size="size" :processes="newProcesses" />
       </v-col>
     </v-row>
   </div>
@@ -56,6 +54,7 @@
 
 <script>
 import SegmentTable from "./SegmentTable.vue";
+import PhysicalAddress from "./PhysicalAddress.vue";
 
 export default {
   name: "TryOut",
@@ -63,9 +62,10 @@ export default {
     dialog: false,
     isSubmitted: false,
     isWrong: false,
-    size: null
+    size: null,
+    newProcesses: []
   }),
-  components: { SegmentTable },
+  components: { SegmentTable, PhysicalAddress },
   methods: {
     submitted() {
       var self = this;
@@ -78,6 +78,11 @@ export default {
         setTimeout(function() {
           self.isWrong = false;
         }, 3000);
+      }
+    },
+    getProcesses(processes) {
+      if (processes) {
+        this.newProcesses = processes;
       }
     }
   }

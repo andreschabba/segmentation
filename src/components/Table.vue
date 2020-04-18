@@ -9,7 +9,7 @@
         </tr>
       </thead>
       <tbody>
-        <tr v-for="process in processes" :key="process.name">
+        <tr v-for="(process, index) in processes" :key="index" @click="deleteProcess(index)">
           <td>{{ process.name }}</td>
           <td>{{ process.limit }}</td>
           <td>{{ process.base }}</td>
@@ -21,6 +21,11 @@
 
 <script>
 export default {
-  props: ["processes"]
+  props: ["processes"],
+  methods: {
+    deleteProcess(index) {
+      this.$emit("processDeleted", index);
+    }
+  }
 };
 </script>
