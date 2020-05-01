@@ -33,6 +33,11 @@ export default {
     },
     deleteProcess(index) {
       this.processes.splice(index, 1);
+      this.$emit("resetActive", false);
+      this.$emit("resetLogic", {
+        segment: null,
+        offset: null
+      });
     }
   }
 };

@@ -4,7 +4,7 @@
       <template v-slot:activator="{ on }">
         <v-btn color="red" dark v-on="on">Add Logical Address</v-btn>
       </template>
-      <v-card v-if="size != 0">
+      <v-card v-if="processes.length != 0">
         <v-card-title>
           <span class="headline">Settings</span>
         </v-card-title>
@@ -18,6 +18,7 @@
                   required
                   v-model="logicalData.segment"
                 ></v-text-field>
+                <big style="color:red" v-if="isWrong3">*Process does not exist</big>
                 <big style="color:red" v-if="isWrong1">*Wrong value</big>
               </v-col>
               <v-col cols="12" md="6" sm="12">
@@ -28,6 +29,10 @@
                   v-model="logicalData.offset"
                 ></v-text-field>
                 <big style="color:red" v-if="isWrong2">*Wrong value</big>
+                <big
+                  style="color:red"
+                  v-if="isWrong4"
+                >*Offset must be lesser than the limit of the process</big>
               </v-col>
             </v-row>
           </v-container>
@@ -37,7 +42,7 @@
           <v-btn color="blue darken-1" text @click="dialog = false">Close</v-btn>
           <v-btn
             :disabled="
-              !logicalData.segment || isWrong1 || !logicalData.offset || isWrong2
+              !logicalData.segment || isWrong1 || !logicalData.offset || isWrong2 || isWrong3 || isWrong4
             "
             color="blue darken-1"
             text
@@ -66,11 +71,13 @@
 <script>
 export default {
   name: "AddLogic",
-  props: ["size"],
+  props: ["processes"],
   data: () => ({
     dialog: false,
     isWrong1: false,
     isWrong2: false,
+    isWrong3: false,
+    isWrong4: false,
     logicalData: {
       segment: null,
       offset: null
@@ -81,6 +88,27 @@ export default {
       var self = this;
       var segment = parseInt(this.logicalData.segment);
       var offset = parseInt(this.logicalData.offset);
+      var process = null;
+      var valid = false;
+      try {
+        process = this.processes[segment - 1];
+        if (process.limit <= offset) {
+          this.isWrong4 = true;
+          setTimeout(function() {
+            self.isWrong4 = false;
+          }, 3000);
+        } else {
+          valid = true;
+        }
+      } catch (e) {
+        process = null;
+      }
+      if (!process) {
+        this.isWrong3 = true;
+        setTimeout(function() {
+          self.isWrong3 = false;
+        }, 3000);
+      }
       if (!segment) {
         this.isWrong1 = true;
         setTimeout(function() {
@@ -93,7 +121,7 @@ export default {
           self.isWrong2 = false;
         }, 3000);
       }
-      if (segment && offset) {
+      if (segment && offset && process && valid) {
         this.$emit("logicAdded", this.logicalData);
         this.dialog = false;
         this.logicalData = {

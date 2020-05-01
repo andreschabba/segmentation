@@ -1,8 +1,9 @@
 <template>
   <div class="header">
-    <a class="title">Final Project Operating Systems</a>
+    <router-link class="title" to="/" exact>Final Project Operating Systems</router-link>
     <div class="header-right">
       <router-link class="menu" to="/" exact>What is Segementation?</router-link>
+      <router-link class="menu" to="/instructions" exact>Instructions</router-link>
       <router-link class="menu" to="/tryOut">Try Out!</router-link>
       <!-- <a class="menu" @click="home = true" :class="{ active: home }">What is Segmentation?</a>
       <a class="menu" @click="home = false" :class="{ active: !home }">Try out!</a>-->
@@ -55,7 +56,7 @@ export default {
 }
 
 /* Style the active/current link*/
-.header a.router-link-exact-active {
+.header a.router-link-exact-active.menu {
   background-color: #ddd;
   color: black;
 }

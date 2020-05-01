@@ -41,12 +41,22 @@
       <v-col cols="12" md="6" sm="12">
         <h2>Segment Table</h2>
         <hr />
-        <SegmentTable :size="size" @sendProcesses="getProcesses" />
+        <SegmentTable
+          :size="size"
+          @sendProcesses="getProcesses"
+          @resetActive="getActive"
+          @resetLogic="getLogic"
+        />
       </v-col>
       <v-col cols="12" md="6" sm="12">
         <h2>Physical Address Space</h2>
         <hr />
-        <PhysicalAddress :size="size" :processes="newProcesses" />
+        <PhysicalAddress
+          :size="size"
+          :processes="newProcesses"
+          :active="newActive"
+          :logicData="logicData"
+        />
       </v-col>
     </v-row>
   </div>
@@ -63,7 +73,12 @@ export default {
     isSubmitted: false,
     isWrong: false,
     size: null,
-    newProcesses: []
+    newProcesses: [],
+    logicData: {
+      segment: null,
+      offset: null
+    },
+    newActive: false
   }),
   components: { SegmentTable, PhysicalAddress },
   methods: {
@@ -83,6 +98,16 @@ export default {
     getProcesses(processes) {
       if (processes) {
         this.newProcesses = processes;
+      }
+    },
+    getActive(active) {
+      if (active) {
+        this.newActive = active;
+      }
+    },
+    getLogic(logic) {
+      if (logic) {
+        this.logicData = logic;
       }
     }
   }

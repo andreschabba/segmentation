@@ -1,11 +1,13 @@
 <template>
-  <div :style="style" class="memorySegment" @mouseover="mouseOver" @mouseleave="mouseLeave">
-    <p id="center">{{process.name}}</p>
-    <p v-show="active" id="center">
-      Limit = {{process.limit}}
-      <br />
-      Base = {{process.base}}
-    </p>
+  <div>
+    <div :style="style" class="memorySegment" @mouseover="mouseOver" @mouseleave="mouseLeave">
+      <p id="center">{{process.name}}</p>
+      <p v-show="active" id="center">
+        Limit = {{process.limit}}
+        <br />
+        Base = {{process.base}}
+      </p>
+    </div>
   </div>
 </template>
 
