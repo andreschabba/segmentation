@@ -27,9 +27,6 @@
       In the case of valid address, the base address of the segment is added to
       the offset to get the physical address of actual word in the main memory.
     </p>
-    <br />
-    <img id="image" src="../assets/images/os-segmentation.png" />
-    <br />
   </div>
 </template>
 
